@@ -1,0 +1,29 @@
+.pallete-container {
+ margin: 10px;
+ padding: 20px;
+ max-width: 16%;
+ width: 15%;
+ flex-grow:1;
+ border: 1px solid gray;
+}
+
+.circle-color-block {
+ width: 20px;
+ height: 20px;
+ border: none;
+ border-radius: 50%;
+ cursor: pointer;
+}
+
+#red-bg {
+ background-color: red;
+}
+#blue-bg {
+ background-color: blue;
+}
+#green-bg {
+ background-color: green;
+}
+#black-bg {
+ background-color: black;
+}
