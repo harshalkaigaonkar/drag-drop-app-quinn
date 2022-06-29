@@ -90,6 +90,20 @@ const Canvas : React.FC<{}>= () => {
     event.preventDefault();
   }
 
+  const onClickHold = (event:any) => {
+    console.log(event.clientX, event.clientY);
+    console.log(event.target.id);
+    console.log(parseInt(event.target.style.left.split("px")[0], 10), parseInt(event.target.style.top.split("px")[0], 10));
+    console.log(event.clientX - event.target.style.left, event.clientY - event.target.style.top)
+    updateCanvasInfo(canvasContext.dispatch, {
+      id: event.target.id,
+      style: {
+        width: `${event.clientX - parseInt(event.target.style.left.split("px")[0], 10)}px`,
+        height: `${event.clientY - parseInt(event.target.style.top.split("px")[0], 10)}px`,
+      }
+    })
+  }
+
   const onCreateCanvas = () => {
     navigate('canvas-output');
   }
@@ -108,6 +122,7 @@ const Canvas : React.FC<{}>= () => {
             onInput={onChangeContent}
             onDragStart={dragStart}
             onClick={onShapeDropClick}
+            onMouseDown={onClickHold}
             suppressContentEditableWarning={true}
           >{element.innerText}</div>
         ))}
