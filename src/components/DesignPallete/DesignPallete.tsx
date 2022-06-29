@@ -36,22 +36,24 @@ const DesignPallete : React.FC = () => {
       <div>
         <h3>Background Colors</h3>
         <hr />
-        <div style={{display:'flex', gap:'3px'}}>
+        <div style={{display:'flex', gap:'10px'}}>
           <div id="red-bg" className="circle-color-block" onClick={() => onBGClickHandler('red')}></div>
           <div id="blue-bg" className="circle-color-block" onClick={() => onBGClickHandler('blue')}></div>
           <div id="green-bg" className="circle-color-block" onClick={() => onBGClickHandler('green')}></div>
           <div id="black-bg" className="circle-color-block" onClick={() => onBGClickHandler('black')}></div>
+          <div id="white-bg" className="circle-color-block" onClick={() => onBGClickHandler('white')}></div>
         </div>
       </div>
       <br />
       <div>
         <h3>Font Colors</h3>
         <hr />
-        <div style={{display:'flex', gap:'3px'}}>
+        <div style={{display:'flex', gap:'10px'}}>
           <div id="red-bg" className="circle-color-block" onClick={() => onTextClickHandler('red')}></div>
           <div id="blue-bg" className="circle-color-block" onClick={() => onTextClickHandler('blue')}></div>
           <div id="green-bg" className="circle-color-block" onClick={() => onTextClickHandler('green')}></div>
           <div id="black-bg" className="circle-color-block" onClick={() => onTextClickHandler('black')}></div>
+          <div id="white-bg" className="circle-color-block" onClick={() => onTextClickHandler('white')}></div>
         </div>
       </div>
     </aside>

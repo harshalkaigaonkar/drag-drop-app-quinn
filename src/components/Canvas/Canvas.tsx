@@ -109,7 +109,7 @@ const Canvas : React.FC<{}>= () => {
             onDragStart={dragStart}
             onClick={onShapeDropClick}
             suppressContentEditableWarning={true}
-          >Text</div>
+          >{element.innerText}</div>
         ))}
       </div>
       <button className="create-canvas-button" onClick={onCreateCanvas}>Create Canvas</button>

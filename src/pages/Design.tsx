@@ -6,7 +6,7 @@ import Shapes from '../components/Shapes/Shapes'
 const Design : React.FC = () => {
   
   return (
-    <div style={{"width":"100%", "height":"100vh", "display":"flex", "flexDirection":"row"}}>
+    <div style={{"width":"100%", "height":"100vh", "display":"flex", "flexDirection":"row", "backgroundColor": "whitesmoke"}}>
      <Shapes />
      <Canvas />
      <DesignPallete />
