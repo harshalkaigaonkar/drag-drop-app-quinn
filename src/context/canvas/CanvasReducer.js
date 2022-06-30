@@ -1,8 +1,6 @@
 import {
   ADD_CANVAS_INFO,
   UPDATE_CANVAS_INFO,
-  SET_CLIENTX,
-  SET_CLIENTY,
   SET_TARGET_ELEMENT,
 } from '../types';
 
@@ -37,16 +35,6 @@ const CanvasReducer = (state, action) => {
         return element;
        })
      };
-    case SET_CLIENTX:
-        return {
-          ...state,
-          clientX: action.payload
-        };
-    case SET_CLIENTY:
-        return {
-          ...state,
-          clientY: action.payload
-        };
     case SET_TARGET_ELEMENT: 
         return {
           ...state,

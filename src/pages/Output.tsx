@@ -15,9 +15,6 @@ const Output : React.FC = () => {
           id={element.id}
           className={element.className}
           style={element.style}
-          draggable={element.draggable}
-          contentEditable={element.contentEditable}
-          suppressContentEditableWarning={true}
           >{element.innerText}</div>
         ))}
       </div>

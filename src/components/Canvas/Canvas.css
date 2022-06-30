@@ -36,6 +36,7 @@
 
 .output-container {
  display: flex;
+ flex-direction: column;
  justify-content: center;
  align-items: center;
  background-color: whitesmoke;
@@ -48,4 +49,8 @@
  margin: 10px;
  width: 60%;
  height: 98vh;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+ content:attr(data-text)
 }

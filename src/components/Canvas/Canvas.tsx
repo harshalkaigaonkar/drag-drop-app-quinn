@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CanvasContext from '../../context/canvas/CanvasContext';
 import {
   addCanvasInfo,
   updateCanvasInfo,
-  setClientX,
-  setClientY,
   setTargetElement,
 } from '../../context/canvas/CanvasState'
 import'./Canvas.css';
@@ -14,7 +12,8 @@ const Canvas : React.FC<{}>= () => {
 
   const canvasContext = useContext(CanvasContext);
   const navigate = useNavigate();
-  const observer = useRef();
+  const [manipulatingSize, setManipulatingSize] = useState<boolean>(false);
+  const [continueManipulatingSize, setContinueManipulatingSize] = useState<boolean>(false);
 
   const dragOver = (event : any) => {
     event.preventDefault();
@@ -48,13 +47,12 @@ const Canvas : React.FC<{}>= () => {
   const drop = (event: any) =>  {
     event.dataTransfer.dropEffect = 'copy';
     let ShapeDrop = event.dataTransfer.getData('copy');
-    let ShapeDropNode: any;
-    let id : string;
+    // let ShapeDropNode: (Node|null|HTMLElement|undefined) = null;
+    let id : string|null = null;
     const ParentNode: NodeListOf<Node>|undefined = document.getElementById('canvas')?.childNodes;
     if(ShapeDrop) {
-      ShapeDropNode = document.getElementById(ShapeDrop)?.cloneNode(true);
+      // ShapeDropNode = document.getElementById(ShapeDrop)?.cloneNode(true);
       id = `canvas-class-${ParentNode && ParentNode.length + 1}`;
-      console.log(ShapeDropNode.offsetWidth, ShapeDropNode.offsetHeight)
       const ShapeDropNodeObject = {
         id,
         className: "shape-on-canvas",
@@ -76,7 +74,7 @@ const Canvas : React.FC<{}>= () => {
       addCanvasInfo(canvasContext.dispatch, ShapeDropNodeObject);
     } else {
       ShapeDrop = event.dataTransfer.getData('same');
-      ShapeDropNode = document.getElementById(ShapeDrop);
+      // ShapeDropNode = document.getElementById(ShapeDrop);
       id = ShapeDrop;
       const ShapeDropNodeObject = {
         id,
@@ -90,23 +88,34 @@ const Canvas : React.FC<{}>= () => {
     event.preventDefault();
   }
 
-  const onClickHold = (event:any) => {
-    console.log(event.clientX, event.clientY);
-    console.log(event.target.id);
-    console.log(parseInt(event.target.style.left.split("px")[0], 10), parseInt(event.target.style.top.split("px")[0], 10));
-    console.log(event.clientX - event.target.style.left, event.clientY - event.target.style.top)
-    updateCanvasInfo(canvasContext.dispatch, {
-      id: event.target.id,
-      style: {
-        width: `${event.clientX - parseInt(event.target.style.left.split("px")[0], 10)}px`,
-        height: `${event.clientY - parseInt(event.target.style.top.split("px")[0], 10)}px`,
-      }
-    })
-  }
-
   const onCreateCanvas = () => {
     navigate('canvas-output');
   }
+
+  const onMouseDownHandler = (event : any) => {
+    setManipulatingSize(!manipulatingSize);
+  }
+
+  const onMouseMoveHandler = (event: any) => {
+    if(manipulatingSize) {
+      setContinueManipulatingSize(!continueManipulatingSize);
+    }
+  }
+
+  const onMouseUpHandler = (event: any) => {
+    if(manipulatingSize && continueManipulatingSize) {
+      setManipulatingSize(!manipulatingSize);
+      setContinueManipulatingSize(!continueManipulatingSize);
+      updateCanvasInfo(canvasContext.dispatch, {
+        id: event.target.id,
+        style: {
+          width: `${event.clientX - parseInt(event.target.style.left.split("px")[0], 10)}px`,
+          height: `${event.clientY - parseInt(event.target.style.top.split("px")[0], 10)}px`,
+        }
+      })
+    }
+  }
+
   
   return (
     <main className='canvas-container' onClick={onClickCanvas}>
@@ -122,9 +131,12 @@ const Canvas : React.FC<{}>= () => {
             onInput={onChangeContent}
             onDragStart={dragStart}
             onClick={onShapeDropClick}
-            onMouseDown={onClickHold}
             suppressContentEditableWarning={true}
-          >{element.innerText}</div>
+            onMouseDown={onMouseDownHandler}
+            onMouseMove={onMouseMoveHandler}
+            onMouseUp={onMouseUpHandler}
+            data-text={`${element.innerText}`}
+          ></div>
         ))}
       </div>
       <button className="create-canvas-button" onClick={onCreateCanvas}>Create Canvas</button>
